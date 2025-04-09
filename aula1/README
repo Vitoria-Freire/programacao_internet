@@ -1,0 +1,14 @@
+Funções :
+    alert exibe uma janela de alerta que pode variar de navegador para navegador
+    document.write 
+    console.log funciona como um print mas aparece no terminal do navegdor  
+
+
+OBSERVAÇÃO:
+Nos conseguimos alterar o conteudo da pagina de forma momentanea atraves do console, as mudanças como não foram feitas na pagina não ficam salvas. Lembrando que as mudanças só
+seram vistas na pagina redenrizada 
+
+O JavaScript pode ser colocado no Body onde é executado quando a pagina é caregada, no head que só será executado quando for chamado atraves de uma funcao e 
+
+
+sumhy4e7
