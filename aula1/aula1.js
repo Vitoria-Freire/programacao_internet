@@ -3,7 +3,7 @@
 // }
 function mudou(){
     var image = document.getElementById('img');
-    if (image.src = 'https://www.w3schools.com/js/pic_bulboff.gif'){
+    if (image.src == 'https://www.w3schools.com/js/pic_bulboff.gif'){
         image.src = 'https://www.w3schools.com/js/pic_bulbon.gif';
     }
     else {
