@@ -6,6 +6,8 @@ alturaFloat = parseFloat(altura);
 pesoFloat = parseFloat(peso);
 
 alturaM = alturaFloat / 100;
-indice = (peso / (alturaM*alturaM));
+altura2 = altura**2
+indice = (peso / altura2);
 
+// document.write(alturaM);
 document.write(indice);
