@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="/aula5/ex1.js"></script>
+
+    <style>
+        table, td, tr {
+            border: 1px solid black;
+        }
+        .cor1 {
+            background-color: #21a8f7;
+            color: #000000;
+        }
+        .cor2{
+            background-color: #e282b7;
+            color: black;
+        }
+    </style>
+
+    <title>Document</title>
+</head>
+<body>
+    <table>
+        <tr class="par">
+            <td>Ave Maria </td>
+            <td>Cheia de Graça</td>
+        </tr>
+        <tr class="impar">
+            <td>Jesus te AMA</td>
+            <td>E ama muito</td>
+        </tr>
+        <tr class="par">
+            <td>Ave Maria </td>
+            <td>Cheia de Graça</td>
+        </tr>
+        <tr class="impar">
+            <td>Jesus te AMA</td>
+            <td>E ama muito</td>
+        </tr>
+    </table>
+    <script type="text/javascript">
+        $(".par").addClass("cor1");
+        $(".impar").addClass("cor2");
+    </script>
+</body>
+</html>
