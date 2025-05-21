@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Clima por Cidade</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+</head>
+<body>
+    <label for="cidade">Nome da cidade:</label>
+    <input type="text" id="cidade">
+    <button id="buscar">Procurar</button>
+
+    <div id="resultado">
+        <h2>Clima em Natal</h2>
+        <p>Temperatura: 27 °C</p>
+        <p>Condição: Parcialmente Nublado</p>
+    </div>
+
+    <script>
+        $('#buscar').click(function() {
+            var cidade = $('#cidade').val();
+            var url = 'https://wttr.in/' + cidade + '?format=j1&lang=PT';
+            console.log(cidade);
+            console.log(url)
+
+            $.getJSON(url, function(data) {
+               console.log('tô dentro');
+
+                var nome = nearest_area[0].areaName[0].value[0];
+                var temp = current_condition[0].temp_C;
+                var cond = current_condition[0].lang_pt[0].value;
+
+                
+            });
+        });
+    </script>
+</body>
+</html>
+
+
