@@ -1,23 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Minha Primeira Página</title>
-</head>
-<body>
-    <h1>Olá, mundo! Sou {{nome1}} e esta é minha primeira página com Flask.</h1>
+{% extends 'base.html' %}
 
-    {% if logado %}
-        <h1>Bem-vindo(a), {{usuario.nome}}!</h1>
-        <ul>
-            {% for p in usuario.produtos %}
-                <li>{{ p }}</li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <h1>Faça o login para continuar.</h1>
-    {% endif %}
-    {# este eh um comentario#}
-</body>
-</html>
+{% block titulo %} Inicio {% endblock %}
+
+{% block conteudo %}
+    <h1>Seja Bem vindo!!!</h1>
+    <p>Este saite foi feito para você</p>
+{% endblock %}
