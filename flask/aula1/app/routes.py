@@ -4,7 +4,6 @@ from flask import render_template
 
 @app.route('/')
 def hello():
-    #user = 'Vitória'
     return render_template('index.html')
 
 @app.route('/sobre')
@@ -25,6 +24,11 @@ def sob():
 def hola():
     return render_template('contato.html')
 
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    formulario = LoginForm()
+    if formulario.validate_on_submit()
+    
 @app.route('/preferidos')
 def ola():
     return 'Gosto de ler livros, assistir séries, viajar e sair com meus amigos'
