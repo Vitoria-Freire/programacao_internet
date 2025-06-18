@@ -1,10 +1,10 @@
-from flask import redirect, render_template, flash
+from flask import render_template, flash
 
 class AutheticationController:
 
     def login(form):
         flash(f'O usuario {form.username.data} fez o login, lembrar={form.remember_me.data}')
-        usuario = {
+        usuario_logado = {
             'nome': form.username.data
         }
-        return render_template('index.html', usuario = usuario, usuario_logado = True)
+        return render_template('index.html', usuario = usuario_logado, usuario_logado = True)

@@ -9,7 +9,6 @@ def hello():
 
 @app.route('/sobre')
 def sob():
-    #user = 'Vitória'
     return render_template('sobre.html')
 
 @app.route('/contato')
