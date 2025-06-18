@@ -1,7 +1,9 @@
 from app import app
-from flask import render_template
-from app.forms.login_form import LoginForm
+from flask import render_template, redirect
+from app.forms.login_form import LoginForm, UserForm
 from app.controllers.authenticationController import AutheticationController
+from app.models import Usuario
+from app import db
 
 @app.route('/')
 def hello():
@@ -22,6 +24,18 @@ def login():
         return AutheticationController.login(formulario)
     return render_template('login.html', title='Login', form=formulario)
     
-@app.route('/preferidos')
-def ola():
-    return 'Gosto de ler livros, assistir séries, viajar e sair com meus amigos'
+@app.route('/inserir', methods=['GET', 'POST'])
+def inserindo():
+    formulario = UserForm()
+    if formulario.validate_on_submit():
+        usuario = Usuario (
+            username = formulario.username.data,
+            email = formulario.email.data,
+            password_hash =formulario.password.data
+        )
+        db.session.add(usuario)
+        db.session.commit()
+        return redirect('/')
+    return render_template('login.html', title='Cadastro', form=formulario)
+
+
