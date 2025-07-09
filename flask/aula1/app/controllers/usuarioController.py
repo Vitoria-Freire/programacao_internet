@@ -7,14 +7,16 @@ from app.models import Usuario
 
 class UsuarioController:
     
-    def cadastrar_usuario(form):
-        usuario = Usuario()
-        form.populate_obj(usuario)
-        
-        db.session.add(usuario)
-        db.session.commit()
-        flash(f"O usuario {usuario.username} foi cadastrado com sucesso!")
-        return render_template("index.html", usuario = usuario)
+    def salvar(formulario):
+        try:
+            usuario = Usuario()
+            formulario.populate_obj(usuario)
+            db.session.add(usuario)
+            db.session.commit()
+            return True
+        except Exception as e:
+            db.session.rollback()
+            return False
     
     
     def listar_usuarios():
