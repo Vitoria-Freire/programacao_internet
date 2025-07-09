@@ -40,11 +40,12 @@
 #     return render_template('login.html', title='Cadastro', form=formulario)
 
 from app import app
-from flask import render_template
+from flask import render_template, flash
 from app.forms.login_form import LoginForm
 from app.forms.usuario_form import UsuarioForm
-from app.controllers.authenticationController import AuthenticationController
+from app.controllers.authenticationController import AutheticationController
 from app.controllers.usuarioController import UsuarioController
+from app.forms.usuario_form import UsuarioForm
 
 
 @app.route("/")
@@ -101,3 +102,16 @@ def atualizar(id):
 def remover(id):
     UsuarioController.remover_usuario(id)
     return render_template("index.html")
+
+@app.route('/cadastrar', methods= ['GET', 'POST'])
+def cadastrar():
+    formulario = UsuarioForm()
+    if formulario.validate_on_submit():
+        sucesso = UsuarioController.salvar(formulario)
+        if sucesso:
+            flash('Usúario cadastrado com sucesso!', category='success')
+            return render_template('index.html')
+        else: 
+            flash('Erro ao cadastrar o novo usúario.', category='error')
+            return render_template('cadastro.html', form =  formulario)
+    return render_template('cadastro.html', form = formulario)

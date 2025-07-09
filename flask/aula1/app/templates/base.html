@@ -4,22 +4,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static',filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>{% block titulo %} {% endblock %} </title>
 
 </head>
 <body>
-    <header>Meu site</header>
-    {% with messages = get_flashed_messages() %}
-    {% if messages %}
-        <ul>
-            {% for message in messages %}
-                <li> {{ message }} </li>
-            {% endfor %}
-        </ul>
-    {% endif %}
-    {% endwith %}
+    <header>
+        <div>
+            Rede Social:
+            <a href="/">Início</a>
+            <a href="{{ url_for('login') }}">Login</a>
+            <a href="{{ url_for('cadastrar') }}">Cadastro de Usuário</a>
+            </div>
+    </header>
+
     {% block conteudo %}
     {% endblock %}
+    
+    {% with messages = get_flashed_messages(with_categories=True) %}
+        {% if messages %}
+        <ul>
+            {% for category, message in messages %}
+                {% if category == 'error' %}
+                    <li><i class="fa fa-exclamation-triangle"></i> {{ message }}</li>
+                {% elif category == 'success' %}
+                    <li><i class="fa fa-check"></i> {{ message }}</li>
+                {% else %}
+                    <li>{{ message }}</li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+            {% endif %}
+        {% endwith %}
 
     <footer>Todos os direitos reservados</footer>
 </body>
