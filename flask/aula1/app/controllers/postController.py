@@ -3,11 +3,11 @@ import sqlalchemy as sa
 from app.models import Post
 
 class PostController:
-    def postar(form, usuario):
+    def postar(form, useid):
         try:
             post = Post()
             form.populate_obj(post)
-            post.user_id = usuario
+            post.user_id = useid
 
             db.session.add(post)
             db.session.commit()

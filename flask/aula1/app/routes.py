@@ -44,9 +44,11 @@ from app import db
 from flask import render_template, flash, redirect
 from app.forms.login_form import LoginForm
 from app.forms.usuario_form import UsuarioForm
+from app.forms.post_form import PostForm
 from app.models import Usuario, Post
 from app.controllers.authenticationController import AutheticationController
 from app.controllers.usuarioController import UsuarioController
+from app.controllers.postController import PostController
 from app.forms.usuario_form import UsuarioForm
 
 
@@ -72,15 +74,15 @@ def login():
 def cadastrar_usuario():
     formulario = UsuarioForm()
     if formulario.validate_on_submit():
-        return UsuarioController.cadastrar_usuario(formulario)
-    return render_template('cadastro_usuario.html', title='Cadastro de Usuario', form = formulario)
+        return UsuarioController.salvar(formulario)
+    return render_template('cadastro.html', title='Cadastro de Usuario', form = formulario)
 
 
 @app.route('/listar', methods=['GET'])
 def listar():
     usuarios = UsuarioController.listar_usuarios()
-    for u in usuarios:
-        print(u.id, u.username, u.email)
+    for user in usuarios:
+        print(user.id, user.username, user.email)
     return render_template("index.html")
 
 
@@ -115,13 +117,18 @@ def cadastrar():
             return render_template('index.html')
         else: 
             flash('Erro ao cadastrar o novo usúario.', category='error')
-            return render_template('cadastro.html', form =  formulario)
+            return render_template('cadastro.html', form = formulario)
     return render_template('cadastro.html', form = formulario)
 
-@app.route('/inserir', methods=['GET'])
-def inserir():
-    usuario = Usuario.query.get(1)
-    novo_post = Post(body = 'Post de exemplo', author=usuario)
-    db.session.add(novo_post)
-    db.session.commit()
-    return redirect('/')
+@app.route('/post', methods=['GET', 'POST'])
+def post():
+    form = PostForm()
+    if form.validate_on_submit():
+        sucesso = PostController.postar(form, 3)
+        if sucesso:
+            flash('Post publicado com sucesso!', category='success')
+            return render_template('index.html')
+        else: 
+            flash('Erro ao cadastrar o novo usúario.', category='error')
+            return render_template('cadastro_usuario.html', form = form)
+    return render_template('cadastro_usuario.html', title='Novo Post', form=form)
