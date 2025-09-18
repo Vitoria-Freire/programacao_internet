@@ -40,9 +40,11 @@
 #     return render_template('login.html', title='Cadastro', form=formulario)
 
 from app import app
-from flask import render_template, flash
+from app import db
+from flask import render_template, flash, redirect
 from app.forms.login_form import LoginForm
 from app.forms.usuario_form import UsuarioForm
+from app.models import Usuario, Post
 from app.controllers.authenticationController import AutheticationController
 from app.controllers.usuarioController import UsuarioController
 from app.forms.usuario_form import UsuarioForm
@@ -115,3 +117,11 @@ def cadastrar():
             flash('Erro ao cadastrar o novo usúario.', category='error')
             return render_template('cadastro.html', form =  formulario)
     return render_template('cadastro.html', form = formulario)
+
+@app.route('/inserir', methods=['GET'])
+def inserir():
+    usuario = Usuario.query.get(1)
+    novo_post = Post(body = 'Post de exemplo', author=usuario)
+    db.session.add(novo_post)
+    db.session.commit()
+    return redirect('/')
