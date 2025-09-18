@@ -1,8 +1,5 @@
-from flask import render_template, flash
 from app import db
 import sqlalchemy as sa
-
-
 from app.models import Usuario
 
 class UsuarioController:
@@ -11,13 +8,15 @@ class UsuarioController:
         try:
             usuario = Usuario()
             formulario.populate_obj(usuario)
+            
             db.session.add(usuario)
             db.session.commit()
             return True
         except Exception as e:
             db.session.rollback()
+            print(e)
             return False
-    
+
     
     def listar_usuarios():
         query = sa.select(Usuario)
