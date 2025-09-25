@@ -1,6 +1,8 @@
 from app import db
 import sqlalchemy as sa
 from app.models import Usuario
+# from flask import render_template, flash
+from werkzeug.security import generate_password_hash
 
 class UsuarioController:
     
@@ -8,7 +10,7 @@ class UsuarioController:
         try:
             usuario = Usuario()
             formulario.populate_obj(usuario)
-            
+            usuario.password_hash = generate_password_hash(formulario.password.data)
             db.session.add(usuario)
             db.session.commit()
             return True
@@ -48,3 +50,12 @@ class UsuarioController:
             print('Usuário removido com sucesso!')
         else:
             print('Usuário não encontrado.')
+
+    def checar_unicidade(campo, tipo):
+        if tipo == 'username':
+            if Usuario.query.filter_by(username=campo).first():
+                return False
+            if tipo == 'email':
+                if Usuario.query.filter_by(email=campo).first():
+                    return False
+        return True
