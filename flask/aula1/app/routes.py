@@ -41,7 +41,7 @@
 
 from app import app
 from app import db
-from flask import render_template, flash, redirect
+from flask import render_template, flash, redirect, url_for
 from app.forms.login_form import LoginForm
 from app.forms.usuario_form import UsuarioForm
 from app.forms.post_form import PostForm
@@ -66,7 +66,7 @@ def sobre():
 def login():
     formulario = LoginForm()
     if formulario.validate_on_submit():
-        return AuthenticationController.login(formulario)
+        return UsuarioController.login(formulario)
     return render_template('login.html', title='Login', form = formulario)
 
 
@@ -113,10 +113,10 @@ def cadastrar():
     if formulario.validate_on_submit():
         sucesso = UsuarioController.salvar(formulario)
         if sucesso:
-            flash('Usúario cadastrado com sucesso!', category='success')
-            return render_template('index.html')
+            flash('Usuário cadastrado com sucesso!', category='success')
+            return redirect(url_for('login'))
         else: 
-            flash('Erro ao cadastrar o novo usúario.', category='error')
+            flash('Erro ao cadastrar o novo usuário.', category='error')
             return render_template('cadastro.html', form = formulario)
     return render_template('cadastro.html', form = formulario)
 
@@ -129,6 +129,6 @@ def post():
             flash('Post publicado com sucesso!', category='success')
             return render_template('index.html')
         else: 
-            flash('Erro ao cadastrar o novo usúario.', category='error')
-            return render_template('cadastro_usuario.html', form = form)
-    return render_template('cadastro_usuario.html', title='Novo Post', form=form)
+            flash('Erro ao cadastrar o novo usuario.', category='error')
+            return render_template('post.html', form = form)
+    return render_template('post.html', title='Novo Post', form=form)
