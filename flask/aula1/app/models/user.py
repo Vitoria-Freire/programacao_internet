@@ -12,4 +12,5 @@ class UsuarioController:
             return True
         except Exception as e:
             db.session.rollback()
+            print(e)
             return False
