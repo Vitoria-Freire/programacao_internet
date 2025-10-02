@@ -16,4 +16,5 @@ class AutheticationController:
             else:
                 return False
             
-    def logout()
+    def logout():
+        return logout_user()
