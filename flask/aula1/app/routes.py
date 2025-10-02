@@ -1,11 +1,10 @@
-from app import app
-from app import db
-from flask import render_template, flash, redirect, url_for,request
+from app import app, db
+from flask import render_template, flash, redirect, url_for, request
 from flask_login import login_required
 from app.forms.login_form import LoginForm
 from app.forms.usuario_form import UsuarioForm
 from app.forms.post_form import PostForm
-from app.models import Usuario, Post
+# from app.models import Usuario, Post
 from app.controllers.authenticationController import AutheticationController
 from app.controllers.usuarioController import UsuarioController
 from app.controllers.postController import PostController
@@ -74,8 +73,8 @@ def remover(id):
 def cadastrar():
     formulario = UsuarioForm()
     if formulario.validate_on_submit():
-        username = formulario.username.data.strip()
-        email = formulario.email.data.strip().lower()
+        # username = formulario.username.data.strip()
+        # email = formulario.email.data.strip().lower()
         sucesso = UsuarioController.salvar(formulario)
         if sucesso:
             flash('Usuário cadastrado com sucesso!', category='success')
