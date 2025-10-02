@@ -1,6 +1,7 @@
 from app import app
 from app import db
-from flask import render_template, flash, redirect, url_for
+from flask import render_template, flash, redirect, url_for,request
+from flask_login import login_required
 from app.forms.login_form import LoginForm
 from app.forms.usuario_form import UsuarioForm
 from app.forms.post_form import PostForm
@@ -20,15 +21,20 @@ def login():
     formulario = LoginForm()
     if formulario.validate_on_submit():
         if AutheticationController.login(formulario):
-            flash ('Login realizado com sucesso!', 'success')
-            return redirect(url_for('home'))
+            next_page = request.args.get('next')
+            if not next_page:
+                next_page = url_for('home')
+            return redirect(next_page)
         else: 
             flash ('Usuário ou senha inválidos', 'error')
     return render_template('login.html', title='Login', form = formulario)
 
 @app.route('/logout')
 def logout():
-
+    success = AutheticationController.logout()
+    if not success:
+        flash('Erro ao realizar o logout.', 'error')
+    return redirect(url_for('home'))
 
 @app.route("/inserir", methods=['GET', 'POST'])
 def cadastrar_usuario():
@@ -37,14 +43,12 @@ def cadastrar_usuario():
         return UsuarioController.salvar(formulario)
     return render_template('cadastro.html', title='Cadastro de Usuario', form = formulario)
 
-
 @app.route('/listar', methods=['GET'])
 def listar():
     usuarios = UsuarioController.listar_usuarios()
     for user in usuarios:
         print(user.id, user.username, user.email)
     return render_template("index.html")
-
 
 @app.route('/listar_filtro', methods=['GET'])
 def listar_com_filtro():
@@ -53,7 +57,6 @@ def listar_com_filtro():
     print(usuario.id, usuario.username, usuario.email)    
     return render_template("index.html")
 
-
 @app.route('/atualizar/<int:id>', methods=['GET'])
 def atualizar(id):
     form = UsuarioForm()
@@ -61,16 +64,18 @@ def atualizar(id):
     UsuarioController.atualizar_usuario(id, form)
     return render_template("index.html")
 
-
 @app.route('/remover/<int:id>', methods=['GET'])
 def remover(id):
     UsuarioController.remover_usuario(id)
     return render_template("index.html")
 
 @app.route('/cadastrar', methods= ['GET', 'POST'])
+@login_required
 def cadastrar():
     formulario = UsuarioForm()
     if formulario.validate_on_submit():
+        username = formulario.username.data.strip()
+        email = formulario.email.data.strip().lower()
         sucesso = UsuarioController.salvar(formulario)
         if sucesso:
             flash('Usuário cadastrado com sucesso!', category='success')
